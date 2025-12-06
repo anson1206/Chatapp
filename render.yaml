@@ -1,0 +1,32 @@
+services:
+  # Backend API + WebSocket
+  - type: web
+    name: chatapp-api
+    env: node
+    region: oregon
+    buildCommand: cd api && npm install
+    startCommand: cd api && node index.js
+    envVars:
+      - key: MONGO_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_URL
+        sync: false
+
+  # Frontend (React)
+  - type: web
+    name: chatapp-frontend
+    env: static
+    region: oregon
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: ./client/dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+      - key: VITE_WS_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
