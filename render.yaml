@@ -3,7 +3,6 @@ services:
   - type: web
     name: chatapp-api
     env: node
-    region: oregon
     buildCommand: cd api && npm install
     startCommand: cd api && node index.js
     envVars:
@@ -18,7 +17,6 @@ services:
   - type: web
     name: chatapp-frontend
     env: static
-    region: oregon
     buildCommand: cd client && npm install && npm run build
     staticPublishPath: ./client/dist
     envVars:
